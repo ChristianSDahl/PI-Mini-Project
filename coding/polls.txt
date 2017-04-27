@@ -1,5 +1,7 @@
 PollNumber,voteOne,voteTwo,description,buttonDescriptionOne,buttonDescriptionTwo
 1,52,41,yes or no?,yes,no
 2,24,48,yes or no?,yes,no
-3,testing 2
-4,HAHAHHA
+3,48,63,Hvis du var en luder i Amsterdam hvilken slags luder ville du være?,transeksuel,tyk
+4,22,15,Hvor mange røvhår har Dahl?,1,alt for mange
+5,44,125,Tyk eller tynd?,tyk,tynd
+6,77,54,Hvilket spil er bedst?,Witcher 3,No mans sky

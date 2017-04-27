@@ -38,6 +38,7 @@ public class VotingServerThread extends Thread {
 						System.out.println(outToClient);
 						// out.writeBytes("sending from server");
 						System.out.println("sent from server now");
+						break;
 					}
 
 					// Create Polls
