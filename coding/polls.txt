@@ -1,5 +1,5 @@
 PollNumber,voteOne,voteTwo,description,buttonDescriptionOne,buttonDescriptionTwo
-1,52,41,yes or no?,yes,no
+1,52,41,Gay or straight?,homo,no-homo
 2,24,48,yes or no?,yes,no
 3,48,63,Trans eller tyk?,transeksuel,tyk
 4,22,15,Hvor mange fingre har Dahl?,1,alt for mange
