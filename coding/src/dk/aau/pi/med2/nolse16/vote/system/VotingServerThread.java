@@ -55,17 +55,22 @@ public class VotingServerThread extends Thread {
 
 					// Get results
 					else if ((tempInCheck = inputLine.substring(0, 11)).equals("get results")) {
-						String tempString = loadSpecificPoll(Integer.parseInt(inputLine.substring(12)));
+						String[] tempArray = inputLine.split(",");
+						int tempElement = Integer.parseInt(tempArray[0].substring(12));
+						String tempString = loadSpecificPoll(tempElement);
+						System.out.println("This is the pole line we want to use: " + tempString);
 						System.out.println("This is what is sent to the client:" + tempString);
 						DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
 						outToClient.writeBytes(tempString + "\n");
 						System.out.println("sent from server now");
 					}
-					if (inputLine.substring(0, 8).equals("votePoll")) {
+					else if (inputLine.substring(0, 8).equals("votePoll")) {
 						String newVotes = inputLine.substring(9);
 						String[] allOldPolls = PollClass.loadStrings("./polls.txt");
 						System.out.println(allOldPolls.length);
-						int tempElement = Integer.parseInt(inputLine.substring(9, 10));
+						String[] tempArray = inputLine.split(",");
+						int tempElement = Integer.parseInt(tempArray[0].substring(9));
+						System.out.println(tempElement);
 						allOldPolls[tempElement] = newVotes;
 						savePolls(allOldPolls);
 						//
