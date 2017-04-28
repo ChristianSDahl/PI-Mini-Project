@@ -1,11 +1,11 @@
-10,0,0,Triangles or Squares?,Triangles,Squares
-10,0,0,Triangles or Squares?,Triangles,Squares
-2,24,48,yes or no?,yes,no
-3,48,63,Trans eller tyk?,transeksuel,tyk
-4,22,15,Hvor mange fingre har Dahl?,1,alt for mange
-5,44,125,Tyk eller tynd?,tyk,tynd
-6,77,54,Hvilket spil er bedst?,Witcher 3,No mans sky
+PollNumber,voteOne,voteTwo,description,buttonDescriptionOne,buttonDescriptionTwo
+1,60,46,Gay or straight?,homo,no-homo
+2,24,49,yes or no?,yes,no
+3,49,63,Trans eller tyk?,transeksuel,tyk
+4,22,16,Hvor mange fingre har Dahl?,1,alt for mange
+5,45,127,Tyk eller tynd?,tyk,tynd
+6,0,1,White or black?,black,white
 6,0,0,White or black?,black,white
-8,0,0,Asian or normal people?,Asian,Normal people
-9,0,0,google or bing?,Google,Bing
-10,0,0,Triangles or Squares?,Triangles,Squares
+8,1,1,Asain or normal people?,Asain,Normal people
+9,1,0,google or bing?,Google,Bing
+10,1,0,Triangles or Squares?,Triangles,Squares

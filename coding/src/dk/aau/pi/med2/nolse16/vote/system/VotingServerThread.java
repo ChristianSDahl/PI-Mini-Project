@@ -75,31 +75,60 @@ public class VotingServerThread extends Thread {
 					}
 					// Vote Polls
 					else if (inputLine.substring(0, 8).equals("votePoll")) {
-						System.out.println("inputline: " + inputLine);
-						String newVotes = inputLine.substring(11);
-						int decider = Integer.parseInt(inputLine.substring(9,10));
-						String pollChange ="";
-						if (decider == 1){
-							String[] changedVote1 = newVotes.split(",");
-							pollChange = changedVote1[1].replace(changedVote1[1], (changedVote1[1])+1);
+						String[] tempArrayforInput = inputLine.split(",");
+						System.out.println("Problem number: " + tempArrayforInput[0].substring(8,9));
+						String oldPoll = inputLine.substring(9);
+						System.out.println("oldpoll: " + oldPoll);
+						String[] oldPollArray = oldPoll.split(",");
+						String[] changedPollArray = oldPollArray;
+						if (Integer.parseInt(tempArrayforInput[0].substring(8,9)) == 1) {
+							System.out.println("change before: " + changedPollArray[1]);
+							changedPollArray[1] = String.valueOf(((Integer.parseInt(changedPollArray[1])+1)));
+							System.out.println("change after: " + changedPollArray[1]);
+						}else{
+							changedPollArray[2] = String.valueOf(((Integer.parseInt(changedPollArray[2])+1)));
 						}
-						else if (decider == 2){
-							String[] changedVote2 = newVotes.split(",");
-							pollChange = changedVote2[2].replace(changedVote2[2], (changedVote2[2])+1);
-						}
-						System.out.println("New votes: " + String.valueOf(newVotes));
-						System.out.println("pollchange: " + pollChange);
+						String newVote = "";
+						
+//						for (int i = 0;i<changedPollArray.length;i++){
+//						newVote += changedPollArray[i];
+//						}
+						newVote = String.join(",", changedPollArray);
+						System.out.println("newvote: " + newVote);
 						String[] allOldPolls = PollClass.loadStrings("./polls.txt");
-						System.out.println(allOldPolls.length);
-						String[] tempArray = pollChange.split(",");
-						int tempElement = Integer.parseInt(tempArray[0]);
-						System.out.println(tempElement);
-						allOldPolls[tempElement] = newVotes;
+						
+						
+						allOldPolls[Integer.parseInt(changedPollArray[0])] = newVote;
 						savePolls(allOldPolls);
-//						outToClient.close();
+
 						System.out.println("votepolls succesful");
 						in.close();
 						break;
+						
+//						System.out.println("inputline: " + inputLine);
+//						String newVotes = inputLine.substring(11);
+//						int decider = Integer.parseInt(inputLine.substring(9, 10));
+//						String pollChange = "";
+//						if (decider == 1) {
+//							String[] changedVote1 = newVotes.split(",");
+//							pollChange = changedVote1[1].replace(changedVote1[1], (changedVote1[1]) + 1);
+//						} else if (decider == 2) {
+//							String[] changedVote2 = newVotes.split(",");
+//							pollChange = changedVote2[2].replace(changedVote2[2], (changedVote2[2]) + 1);
+//						}
+//						System.out.println("New votes: " + String.valueOf(newVotes));
+//						System.out.println("pollchange: " + pollChange);
+//						String[] allOldPolls = PollClass.loadStrings("./polls.txt");
+//						System.out.println(allOldPolls.length);
+//						String[] tempArray = pollChange.split(",");
+//						int tempElement = Integer.parseInt(tempArray[0]);
+//						System.out.println(tempElement);
+//						allOldPolls[tempElement] = newVotes;
+//						savePolls(allOldPolls);
+//						// outToClient.close();
+//						System.out.println("votepolls succesful");
+//						in.close();
+//						break;
 					}
 
 				}
