@@ -38,6 +38,9 @@ public class VotingServerThread extends Thread {
 						System.out.println(outToClient);
 						// out.writeBytes("sending from server");
 						System.out.println("sent from server now");
+						outToClient.close();
+						in.close();
+						break;
 					}
 
 					// Create Polls
@@ -51,6 +54,9 @@ public class VotingServerThread extends Thread {
 						System.out.println(outToClient);
 						// out.writeBytes("sending from server");
 						System.out.println("sent from server now");
+						outToClient.close();
+						in.close();
+						break;
 					}
 
 					// Get results
@@ -63,6 +69,9 @@ public class VotingServerThread extends Thread {
 						DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
 						outToClient.writeBytes(tempString + "\n");
 						System.out.println("sent from server now");
+						outToClient.close();
+						in.close();
+						break;
 					}
 					else if (inputLine.substring(0, 8).equals("votePoll")) {
 						String newVotes = inputLine.substring(9);
@@ -73,26 +82,9 @@ public class VotingServerThread extends Thread {
 						System.out.println(tempElement);
 						allOldPolls[tempElement] = newVotes;
 						savePolls(allOldPolls);
-						//
-						// String oldVotes =
-						// Path path = Paths.get("./polls.txt");
-						// Charset charset = StandardCharsets.UTF_8;
-						//
-						// String content = new String(Files.readAllBytes(path),
-						// charset);
-						// content = content.replaceAll(oldVotes, newVotes);
-						// Files.write(path, content.getBytes(charset));
-						//
-						// // ByteArrayOutputStream outToClient = new
-						// // ByteArrayOutputStream(socket.getOutputStream());
-						// DataOutputStream outToClient = new
-						// DataOutputStream(socket.getOutputStream());
-						// // PrintWriter out = new
-						// // PrintWriter(socket.getOutputStream(), true);
-						// outToClient.writeBytes(tempString + "\n");
-						// System.out.println(outToClient);
-						// // out.writeBytes("sending from server");
-						// System.out.println("sent from server now");
+//						outToClient.close();
+						in.close();
+						break;
 					}
 
 				}
