@@ -125,13 +125,13 @@ public class VotingServerThread extends Thread {
 	}
 
 	public void savePolls(String string) {
-		//need to add line number infront
+		// need to add line number infront
 		try (FileWriter fw = new FileWriter("polls.txt", true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out = new PrintWriter(bw)) {
-				int linecount = PollClass.countLines("polls.txt");
-				out.println("");
-			out.print(String.valueOf(linecount) + "," +string);
+			int linecount = PollClass.countLines("polls.txt") + 1;
+			out.println("");
+			out.print(String.valueOf(linecount) + "," + string);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

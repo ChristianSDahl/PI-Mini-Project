@@ -55,7 +55,7 @@ public class Create_Poll extends AppCompatActivity {
                         String finalDescription = description.getText().toString();
                         String finalOption1 = option1.getText().toString();
                         String finalOption2 = option2.getText().toString();
-                        String finalPoll = "newPoll" + "0," + "0," + finalDescription + "," + finalOption1 + "," + finalOption2;
+                        String finalPoll = "newPoll" + " 0," + "0," + finalDescription + "," + finalOption1 + "," + finalOption2;
 
                         InetAddress IP = InetAddress.getByName("10.0.2.2");
                         Socket clientSocket = new Socket(IP, 4445);

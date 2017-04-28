@@ -5,3 +5,6 @@ PollNumber,voteOne,voteTwo,description,buttonDescriptionOne,buttonDescriptionTwo
 4,22,15,Hvor mange fingre har Dahl?,1,alt for mange
 5,44,125,Tyk eller tynd?,tyk,tynd
 6,77,54,Hvilket spil er bedst?,Witcher 3,No mans sky
+6,0,0,White or black?,black,white
+8,0,0,Asain or normal people?,Asain,Normal people
+9,0,0,Android or Iphone?,Android,Iphone
