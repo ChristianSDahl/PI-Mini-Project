@@ -60,11 +60,8 @@ public class Get_Results extends AppCompatActivity {
                         Log.d("Servertesting", "establishes outputstream");
                         outToServer.writeBytes("get results 0"  + "\n");
                         Log.d("SENT", "Message is sent to server");
-//
-//                        //waits and read input from, maybe not necessary in all cases
                         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                         Log.d("From server", "received shit from server");
-                        //modified sentence == results from server
                         messageFromServer = inFromServer.readLine();
                         Log.d("From server", messageFromServer);
                         clientSocket.close();
@@ -73,7 +70,6 @@ public class Get_Results extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    //Your code goes here
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -86,10 +82,6 @@ public class Get_Results extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //Connect to server
-        //"getResults 2"
-        //INPUT
-//        return messageToServer;
     }
 
     private void addDataSet(){

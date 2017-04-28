@@ -19,7 +19,7 @@ import static com.example.christian.pollvotingsoftware.Main_Menu.messageFromServ
 import static com.example.christian.pollvotingsoftware.Main_Menu.messageToServer;
 
 /**
- * Created by Christian on 27-04-2017.
+ * This class shows the activity to create a new Poll.
  */
 
 public class Create_Poll extends AppCompatActivity {
@@ -41,35 +41,31 @@ public class Create_Poll extends AppCompatActivity {
         option2 = (EditText) findViewById(R.id.editButton2);
     }
 
-    public void savePoll(View view){
-
-
-
-        //start server
+    public void savePoll(View view) {
+        //This thread starts the server in order to save the finished poll.
         Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try {
                     try {
+                        //.getText().toString() saves the text in the EditText fields to a string.
                         String finalDescription = description.getText().toString();
                         String finalOption1 = option1.getText().toString();
                         String finalOption2 = option2.getText().toString();
+                        //finalPoll is the string that is send to the server. It starts with "newPoll" because that is how we identify the strings coming into the server.
                         String finalPoll = "newPoll" + " 0," + "0," + finalDescription + "," + finalOption1 + "," + finalOption2;
 
+                        // 10.0.2.2 is the IP Address for the local host.
                         InetAddress IP = InetAddress.getByName("10.0.2.2");
+                        // We use the port 4445 for our server.
                         Socket clientSocket = new Socket(IP, 4445);
-                        Log.d("Servertesting", "creates socket");
                         DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-                        Log.d("Servertesting", "establishes outputstream");
+                        // The finalPoll is sent to the server.
                         outToServer.writeBytes(finalPoll + "\n");
-                        Log.d("SENT", "Message is sent to server");
-//
-//                        //waits and read input from, maybe not necessary in all cases
                         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                        Log.d("From server", "received shit from server");
-                        //modified sentence == results from server
                         messageFromServer = inFromServer.readLine();
+                        // messageFromServer confirms that the server accepted the string.
                         Log.d("From server", messageFromServer);
                         clientSocket.close();
                         outToServer.close();
@@ -77,7 +73,6 @@ public class Create_Poll extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    //Your code goes here
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -90,17 +85,15 @@ public class Create_Poll extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        // After a String has been sent and saved to the server, the activity goes back to the Poll_Overview.
         Intent i = new Intent(Create_Poll.this, Poll_Overview.class);
         startActivity(i);
-//        Log.d("done", finalPoll);
     }
 
-
-
-
-public void backToOverview(View view){
-    Intent i = new Intent(Create_Poll.this, Poll_Overview.class);
-    startActivity(i);
-}
+    // Method for the back button.
+    public void backToOverview(View view) {
+        Intent i = new Intent(Create_Poll.this, Poll_Overview.class);
+        startActivity(i);
+    }
 
 }
