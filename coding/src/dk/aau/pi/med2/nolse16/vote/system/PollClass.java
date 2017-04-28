@@ -7,12 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileInputStream;
 
+// Class made to make it easier for ourselves to understand the handling of the polls
 public class PollClass {
-
-	public int[] votes;
-	public String description;
-	public String[] buttonDescriptions;
-
+	// methods are static in order for them to be called without an
+	// instanciation of the PollClass
 	public static int countLines(String filename) throws IOException {
 		InputStream is = new BufferedInputStream(new FileInputStream(filename));
 		try {
@@ -34,7 +32,7 @@ public class PollClass {
 		}
 	}
 
-	public static String[] loadStrings(String string) {
+	public static String[] loadStrings() {
 		BufferedReader reader = null;
 		int count = 0;
 		try {
@@ -55,7 +53,6 @@ public class PollClass {
 			while ((line = reader.readLine()) != null) {
 				tempStringArray[linecount] = line;
 				linecount++;
-				// System.out.println(line + " " + linecount);
 			}
 
 		} catch (IOException e) {
@@ -68,7 +65,6 @@ public class PollClass {
 			}
 		}
 
-		// TODO Auto-generated method stub
 		return tempStringArray;
 	}
 }

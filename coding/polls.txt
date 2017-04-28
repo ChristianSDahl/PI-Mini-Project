@@ -1,12 +1,11 @@
 PollNumber,voteOne,voteTwo,description,buttonDescriptionOne,buttonDescriptionTwo
-1,61,47,Gay or straight?,homo,no-homo
-2,24,49,yes or no?,yes,no
-3,49,63,Trans eller tyk?,transeksuel,tyk
-4,22,16,Hvor mange fingre har Dahl?,1,alt for mange
-5,45,127,Tyk eller tynd?,tyk,tynd
-6,0,1,White or black?,black,white
-6,0,0,White or black?,black,white
-8,1,1,Asain or normal people?,Asain,Normal people
-9,1,0,google or bing?,Google,Bing
-10,1,0,Triangles or Squares?,Triangles,Squares
-11,0,0,Poll Description,Option 1,Option 2
+1,67,21,Android or Apple?,Android,Apple
+2,24,49,Windows or Mac?,Windows,Mac
+3,49,63,Which is better for programming?,Eclipse,Processing
+4,22,17,Which language to write in?,Java-based,c#
+5,45,128,Is programming hard?,Why would it be?,Heck no!
+6,60,12,Intel or Amd?,Intel,Amd
+7,45,87,What is better to play games on?,Consoles,PC
+8,84,35,Which do you prefer?,Word Online,ShareLaTeX
+9,120,20,Best search-engine?,Google,Bing
+10,24,84,Best conference-software?,Skype,Discord
