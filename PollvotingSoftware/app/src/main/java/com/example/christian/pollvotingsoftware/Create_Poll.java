@@ -90,7 +90,8 @@ public class Create_Poll extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        Intent i = new Intent(Create_Poll.this, Poll_Overview.class);
+        startActivity(i);
 //        Log.d("done", finalPoll);
     }
 
