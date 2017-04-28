@@ -1,134 +1,120 @@
 package dk.aau.pi.med2.nolse16.vote.system;
 
 import java.net.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.io.*;
 
+// class for the serverthread. Extends the Thread Class.
 public class VotingServerThread extends Thread {
 	private Socket socket = null;
-	private String tempInCheck;
 
+	// constructor for the thread
 	public VotingServerThread(Socket socket) {
 		super("MultiVotingServerThread");
 		this.socket = socket;
 	}
 
+	// since this class is extending the Thread class, the method run has to be
+	// implemented.
 	public void run() {
+		// after the server-thread is started the following blocks of code will
+		// be
+		// continuously run on the thread until any breaks occur of course.
 		while (true) {
+			// inside a try/catch block to easily handle IOExceptions thrown
 			try {
+				// instanciating a bufferedreader to more easily handle the
+				// input received from the client through the socket.
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String inputLine;
 				if ((inputLine = in.readLine()) != null) {
-					System.out.println(inputLine);
 
-					// Load Polls
+					// Load Polls - checks the input
 					if (inputLine.equals("loadPolls")) {
 						String tempString = loadPolls();
-
-						// ByteArrayOutputStream outToClient = new
-						// ByteArrayOutputStream(socket.getOutputStream());
+						// instanciates a outputstream to send bytes of data to
+						// the client through socket
 						DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
-						// PrintWriter out = new
-						// PrintWriter(socket.getOutputStream(), true);
+						// write bytes converts string to bytes
 						outToClient.writeBytes(tempString + "\n");
-						System.out.println(outToClient);
-						// out.writeBytes("sending from server");
 						System.out.println("sent from server now");
+
+						// makes sure to close all streams to not leak any data
 						outToClient.close();
 						in.close();
+
+						// jumps outside of while-loop
 						break;
 					}
 
-					// Create Polls
+					// Create Polls - checks the input
 					else if (inputLine.substring(0, 7).equals("newPoll")) {
 						String pollData = inputLine.substring(8);
+
+						// runs method defined further below. A void function
+						// which takes a string and adds the string to a file
+						// placed on the server system.
 						savePolls(pollData);
 						DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
-						// PrintWriter out = new
-						// PrintWriter(socket.getOutputStream(), true);
 						outToClient.writeBytes("Poll saved" + "\n");
-						System.out.println(outToClient);
-						// out.writeBytes("sending from server");
 						System.out.println("sent from server now");
+
 						outToClient.close();
 						in.close();
 						break;
 					}
 
-					// Get results
-					else if ((tempInCheck = inputLine.substring(0, 11)).equals("get results")) {
+					// Get results - checks the input
+					else if ((inputLine.substring(0, 11)).equals("get results")) {
+						// String.split is a easy way to convert a string file
+						// into an Array. In this case by using the separator
+						// ",".
 						String[] tempArray = inputLine.split(",");
 						int tempElement = Integer.parseInt(tempArray[0].substring(12));
+						// runs method loadSpecificPoll with returns a string of
+						// data. Takes an int as an input-variable to declare
+						// which
+						// poll is wanted from the data.
 						String tempString = loadSpecificPoll(tempElement);
-						System.out.println("This is the pole line we want to use: " + tempString);
-						System.out.println("This is what is sent to the client:" + tempString);
 						DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
 						outToClient.writeBytes(tempString + "\n");
 						System.out.println("sent from server now");
+
 						outToClient.close();
 						in.close();
 						break;
 					}
-					// Vote Polls
+					// Vote Polls - checks the input
 					else if (inputLine.substring(0, 8).equals("votePoll")) {
 						String[] tempArrayforInput = inputLine.split(",");
-						System.out.println("Problem number: " + tempArrayforInput[0].substring(8,9));
 						String oldPoll = inputLine.substring(9);
-						System.out.println("oldpoll: " + oldPoll);
 						String[] oldPollArray = oldPoll.split(",");
 						String[] changedPollArray = oldPollArray;
-						if (Integer.parseInt(tempArrayforInput[0].substring(8,9)) == 1) {
-							System.out.println("change before: " + changedPollArray[1]);
-							changedPollArray[1] = String.valueOf(((Integer.parseInt(changedPollArray[1])+1)));
-							System.out.println("change after: " + changedPollArray[1]);
-						}else{
-							changedPollArray[2] = String.valueOf(((Integer.parseInt(changedPollArray[2])+1)));
+						// if/else statement with depends on a char which can
+						// either be a 1 or 2 indicating which voteNumber the
+						// client has clicked on.
+						if (Integer.parseInt(tempArrayforInput[0].substring(8, 9)) == 1) {
+							changedPollArray[1] = String.valueOf(((Integer.parseInt(changedPollArray[1]) + 1)));
+						} else {
+							changedPollArray[2] = String.valueOf(((Integer.parseInt(changedPollArray[2]) + 1)));
 						}
 						String newVote = "";
-						
-//						for (int i = 0;i<changedPollArray.length;i++){
-//						newVote += changedPollArray[i];
-//						}
+						// String.join is the reverse of .split. It returns a
+						// string object with a separator and String[] as input
 						newVote = String.join(",", changedPollArray);
-						System.out.println("newvote: " + newVote);
-						String[] allOldPolls = PollClass.loadStrings("./polls.txt");
-						
-						
+						// runs method loadStrings which is defiend in the
+						// static PollClass. Handles and returns a String[] from
+						// a file defined within the method.
+						String[] allOldPolls = PollClass.loadStrings();
 						allOldPolls[Integer.parseInt(changedPollArray[0])] = newVote;
+						// runs the method savePolls with a String[] as a
+						// variable. This method takes the String[] inputted and
+						// writes it into a txt.file.
 						savePolls(allOldPolls);
-
 						System.out.println("votepolls succesful");
+
 						in.close();
 						break;
-						
-//						System.out.println("inputline: " + inputLine);
-//						String newVotes = inputLine.substring(11);
-//						int decider = Integer.parseInt(inputLine.substring(9, 10));
-//						String pollChange = "";
-//						if (decider == 1) {
-//							String[] changedVote1 = newVotes.split(",");
-//							pollChange = changedVote1[1].replace(changedVote1[1], (changedVote1[1]) + 1);
-//						} else if (decider == 2) {
-//							String[] changedVote2 = newVotes.split(",");
-//							pollChange = changedVote2[2].replace(changedVote2[2], (changedVote2[2]) + 1);
-//						}
-//						System.out.println("New votes: " + String.valueOf(newVotes));
-//						System.out.println("pollchange: " + pollChange);
-//						String[] allOldPolls = PollClass.loadStrings("./polls.txt");
-//						System.out.println(allOldPolls.length);
-//						String[] tempArray = pollChange.split(",");
-//						int tempElement = Integer.parseInt(tempArray[0]);
-//						System.out.println(tempElement);
-//						allOldPolls[tempElement] = newVotes;
-//						savePolls(allOldPolls);
-//						// outToClient.close();
-//						System.out.println("votepolls succesful");
-//						in.close();
-//						break;
+
 					}
 
 				}
@@ -139,7 +125,8 @@ public class VotingServerThread extends Thread {
 	}
 
 	public String loadPolls() {
-		String[] tempStringArray = PollClass.loadStrings("./polls.txt");
+		// runs method defined in the PollClass.
+		String[] tempStringArray = PollClass.loadStrings();
 		String tempString = "";
 
 		for (int i = 1; i < tempStringArray.length; i++) {
@@ -153,7 +140,7 @@ public class VotingServerThread extends Thread {
 	}
 
 	public String loadSpecificPoll(int specifiedPoll) {
-		String[] tempStringArray = PollClass.loadStrings("./polls.txt");
+		String[] tempStringArray = PollClass.loadStrings();
 		String tempString = "";
 
 		for (int i = 0; i < tempStringArray.length; i++) {
@@ -166,27 +153,22 @@ public class VotingServerThread extends Thread {
 	}
 
 	public void savePolls(String string) {
-		// need to add line number infront
 		try (FileWriter fw = new FileWriter("polls.txt", true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out = new PrintWriter(bw)) {
 			int linecount = PollClass.countLines("polls.txt") + 1;
 			out.println("");
 			out.print(String.valueOf(linecount) + "," + string);
+			
+			bw.close();
+			out.close();
+			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void savePolls(String[] polls) {
-		// StringBuilder builder = new StringBuilder();
-		// for (String string : polls) {
-		// builder.append(string);
-		// }
-
-		// builder.toString();
-		// return builder.toString();
 		String string = null;
 		try (FileWriter fw = new FileWriter("polls.txt", false);
 				BufferedWriter bw = new BufferedWriter(fw);
@@ -199,7 +181,9 @@ public class VotingServerThread extends Thread {
 					out.println(string);
 				}
 			}
-			// out.println(string);
+			bw.close();
+			out.close();
+			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
