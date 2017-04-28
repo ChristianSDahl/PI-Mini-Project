@@ -1,5 +1,5 @@
 PollNumber,voteOne,voteTwo,description,buttonDescriptionOne,buttonDescriptionTwo
-1,60,46,Gay or straight?,homo,no-homo
+1,61,47,Gay or straight?,homo,no-homo
 2,24,49,yes or no?,yes,no
 3,49,63,Trans eller tyk?,transeksuel,tyk
 4,22,16,Hvor mange fingre har Dahl?,1,alt for mange
@@ -9,3 +9,4 @@ PollNumber,voteOne,voteTwo,description,buttonDescriptionOne,buttonDescriptionTwo
 8,1,1,Asain or normal people?,Asain,Normal people
 9,1,0,google or bing?,Google,Bing
 10,1,0,Triangles or Squares?,Triangles,Squares
+11,0,0,Poll Description,Option 1,Option 2

@@ -28,6 +28,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" />
 
+        <!--This is the imported Pie Chart-->
         <com.github.mikephil.charting.charts.PieChart
             android:layout_width="359dp"
             android:layout_height="424dp"
