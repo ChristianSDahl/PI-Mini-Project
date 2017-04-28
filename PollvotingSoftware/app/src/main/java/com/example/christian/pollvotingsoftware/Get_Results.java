@@ -35,31 +35,13 @@ import static com.example.christian.pollvotingsoftware.Main_Menu.messageToServer
  */
 
 public class Get_Results extends AppCompatActivity {
-//    String temp = "75,45,Yes or no?,Yes,No";
-//    String[] parts = temp.split(",");
-//    float votes1 = Float.parseFloat(parts[0]);
-//    float votes2 = Float.parseFloat(parts[1]);
-//    String description = parts[2];
-//    String option1 = parts[3];
-//    String option2 = parts[4];
-
     public Button backtooverview;
-
-
-//    float[] allvotes = {votes1,votes2};
-//    String[] options = {option1, option2};
-//    public PieChart pieChart;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_get_results);
         backtooverview = (Button) findViewById(R.id.backtooverview1);
 
-//        String pollFromServer = reqeustPollFromServer();
-
-
-
-//        String specificPollFromServer = reqeustPollFromServer();
         reqeustPollFromServer();
         addDataSet();
     }
