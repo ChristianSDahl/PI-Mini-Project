@@ -16,7 +16,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 import static com.example.christian.pollvotingsoftware.Main_Menu.messageFromServer;
-import static com.example.christian.pollvotingsoftware.Main_Menu.messageToServer;
 
 /**
  * This class shows the activity to create a new Poll.

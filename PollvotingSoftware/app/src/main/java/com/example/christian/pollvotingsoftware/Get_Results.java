@@ -7,16 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -28,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.christian.pollvotingsoftware.Main_Menu.messageFromServer;
-import static com.example.christian.pollvotingsoftware.Main_Menu.messageToServer;
 
 /**
  * This is the class for the activity that displays the results of a given poll.
