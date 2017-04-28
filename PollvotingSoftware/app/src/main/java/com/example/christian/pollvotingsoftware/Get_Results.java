@@ -31,7 +31,7 @@ import static com.example.christian.pollvotingsoftware.Main_Menu.messageFromServ
 import static com.example.christian.pollvotingsoftware.Main_Menu.messageToServer;
 
 /**
- * Created by Christian on 27-04-2017.
+ * This is the class for the activity that displays the results of a given poll.
  */
 
 public class Get_Results extends AppCompatActivity {
@@ -42,26 +42,29 @@ public class Get_Results extends AppCompatActivity {
         setContentView(R.layout.content_get_results);
         backtooverview = (Button) findViewById(R.id.backtooverview1);
 
-        reqeustPollFromServer();
+        requestPollFromServer();
         addDataSet();
     }
 
-    public void reqeustPollFromServer(){
+    public void requestPollFromServer(){
+        // To get results from a different poll switch this int to it's integer.
+        final int pollToGetResultsFrom = 0;
 
+        //This thread starts the server in order to save the finished poll.
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     try {
+                        // 10.0.2.2 is the IP Address for the local host.
                         InetAddress IP = InetAddress.getByName("10.0.2.2");
+                        // We use the port 4445 for our server.
                         Socket clientSocket = new Socket(IP, 4445);
-                        Log.d("Servertesting", "creates socket");
                         DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-                        Log.d("Servertesting", "establishes outputstream");
-                        outToServer.writeBytes("get results 0"  + "\n");
-                        Log.d("SENT", "Message is sent to server");
+                        //The request is sent to the server.
+                        outToServer.writeBytes("get results " + pollToGetResultsFrom + "\n");
                         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                        Log.d("From server", "received shit from server");
+                        //The relevant string data is received as messageFromServer.
                         messageFromServer = inFromServer.readLine();
                         Log.d("From server", messageFromServer);
                         clientSocket.close();
@@ -78,19 +81,19 @@ public class Get_Results extends AppCompatActivity {
         thread.start();
         try {
             thread.join();
-            Log.d("finishthread", "thread ends");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     private void addDataSet(){
-        Log.d("inputserver",messageFromServer);
+        //The string poll data is split up into a string array with the different elements.
         String[] parts = messageFromServer.split(",");
-        Log.d("arraysize",String.valueOf(parts.length));
         for(int i = 0; i < parts.length;i++) {
             Log.d("results",parts[i]);
         }
+
+        //The variables needed for the data representation pie chart is prepared.
         float votes1 = Float.parseFloat(parts[1]);
         float votes2 = Float.parseFloat(parts[2]);
         String description = parts[3];
@@ -108,11 +111,13 @@ public class Get_Results extends AppCompatActivity {
         pieChart.setTransparentCircleAlpha(0);
         pieChart.setDrawEntryLabels(true);
 
+        //The data for the pie chart is counted
         List<PieEntry> pieEntries = new ArrayList<>();
         for (int i=0; i<allvotes.length; i++){
             pieEntries.add(new PieEntry(allvotes[i],options[i]));
         }
 
+        //Pie Chart design
         PieDataSet pieDataSet = new PieDataSet(pieEntries, description);
         pieDataSet.setSliceSpace(2);
         pieDataSet.setValueTextSize(15);
@@ -134,6 +139,8 @@ public class Get_Results extends AppCompatActivity {
         pieChart.invalidate();
 
     }
+
+    // Method for the back button.
     public void backToOverview1(View view){
         Intent i = new Intent(Get_Results.this, Poll_Overview.class);
         startActivity(i);
