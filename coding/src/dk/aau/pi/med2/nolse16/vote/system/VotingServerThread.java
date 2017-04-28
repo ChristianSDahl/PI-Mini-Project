@@ -73,16 +73,31 @@ public class VotingServerThread extends Thread {
 						in.close();
 						break;
 					}
+					// Vote Polls
 					else if (inputLine.substring(0, 8).equals("votePoll")) {
-						String newVotes = inputLine.substring(9);
+						System.out.println("inputline: " + inputLine);
+						String newVotes = inputLine.substring(11);
+						int decider = Integer.parseInt(inputLine.substring(9,10));
+						String pollChange ="";
+						if (decider == 1){
+							String[] changedVote1 = newVotes.split(",");
+							pollChange = changedVote1[1].replace(changedVote1[1], (changedVote1[1])+1);
+						}
+						else if (decider == 2){
+							String[] changedVote2 = newVotes.split(",");
+							pollChange = changedVote2[2].replace(changedVote2[2], (changedVote2[2])+1);
+						}
+						System.out.println("New votes: " + String.valueOf(newVotes));
+						System.out.println("pollchange: " + pollChange);
 						String[] allOldPolls = PollClass.loadStrings("./polls.txt");
 						System.out.println(allOldPolls.length);
-						String[] tempArray = inputLine.split(",");
-						int tempElement = Integer.parseInt(tempArray[0].substring(9));
+						String[] tempArray = pollChange.split(",");
+						int tempElement = Integer.parseInt(tempArray[0]);
 						System.out.println(tempElement);
 						allOldPolls[tempElement] = newVotes;
 						savePolls(allOldPolls);
 //						outToClient.close();
+						System.out.println("votepolls succesful");
 						in.close();
 						break;
 					}
